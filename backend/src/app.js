@@ -13,11 +13,7 @@ app.get("/", (req, res) => {
 
 app.use(
   cors({
-    origin: [
-      "https://shubbler-api.onrender.com",
-      "https://shubbler.vercel.app/",
-      "http://localhost:5173/",
-    ],
+    origin: "*",
     credentials: true,
   })
 );
