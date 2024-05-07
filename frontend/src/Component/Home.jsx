@@ -8,6 +8,7 @@ function Home() {
   const [vichars, setVichars] = useState([]);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  console.log(authStatus);
   useEffect(() => {
     getAllPost().then((res) => {
       console.log(res);
@@ -25,8 +26,6 @@ function Home() {
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   }
-
-  console.log(vichars);
 
   return (
     <div className="min-h-screen grid items-center justify-center pt-16 bg-gray-100 dark:bg-gray-800">
