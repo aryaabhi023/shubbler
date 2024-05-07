@@ -16,6 +16,7 @@ app.use(
     origin: [
       "https://shubbler-api.onrender.com",
       "https://shubbler.vercel.app/",
+      "http://localhost:5173/",
     ],
     credentials: true,
   })
