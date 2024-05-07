@@ -7,7 +7,7 @@ import { LikedBtn } from "./index";
 function Home() {
   const [vichars, setVichars] = useState([]);
   const navigate = useNavigate();
-  const authStatus = useSelector((state) => state.auth.status);
+  const authStatus = useSelector((state) => state.auth);
   console.log(authStatus);
   useEffect(() => {
     getAllPost().then((res) => {
