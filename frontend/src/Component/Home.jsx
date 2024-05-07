@@ -10,6 +10,7 @@ function Home() {
   const authStatus = useSelector((state) => state.auth.status);
   useEffect(() => {
     getAllPost().then((res) => {
+      console.log(res);
       setVichars([...res.data]);
     });
   }, []);
@@ -34,6 +35,7 @@ function Home() {
           Login to read Vichars
         </h1>
       ) : (
+        vichars.length &&
         vichars.map((vichar) => (
           <div
             key={vichar._id}
