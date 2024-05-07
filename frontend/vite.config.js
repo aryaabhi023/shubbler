@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "https://shubbler-api.onrender.com/",
+      "/api": "https://shubbler-api.onrender.com",
     },
   },
 });
