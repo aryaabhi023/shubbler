@@ -25,6 +25,8 @@ function Home() {
     return formattedDate;
   }
 
+  console.log(vichars);
+
   return (
     <div className="min-h-screen grid items-center justify-center pt-16 bg-gray-100 dark:bg-gray-800">
       {!authStatus ? (
