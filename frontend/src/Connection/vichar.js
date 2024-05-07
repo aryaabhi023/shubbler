@@ -3,6 +3,7 @@ import axios from "axios";
 export const getAllPost = async () => {
   try {
     const posts = await axios.get("/api/v1/vichar/get-posts");
+    console.log("hey", posts);
     return posts;
   } catch (err) {
     console.log(err.message);
