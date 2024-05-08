@@ -9,7 +9,7 @@ export const verifyJWT = async function (req, res, next) {
     if (!token || token === "undefined") {
       return res.status(401).json("Unauthorized request");
     }
-
+    console.log(token, "Hey");
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     const user = await User.findById(decodedToken?._id).select(
       "-password -refeshToken"
