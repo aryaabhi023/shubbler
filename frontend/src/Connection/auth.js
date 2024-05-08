@@ -5,7 +5,7 @@ const backendUrl = "https://shubbler-api.onrender.com";
 
 export const login = async ({ username, password }) => {
   try {
-    const res = await axios.post("/api/v1/user/login", {
+    const res = await axios.post(backendUrl + "/api/v1/user/login", {
       username,
       password,
     });
@@ -18,7 +18,7 @@ export const login = async ({ username, password }) => {
 
 export const registerUser = async ({ fullName, email, username, password }) => {
   try {
-    let res = await axios.post("/api/v1/user/register", {
+    let res = await axios.post(backendUrl + "/api/v1/user/register", {
       fullName,
       email,
       username,
@@ -34,7 +34,7 @@ export const registerUser = async ({ fullName, email, username, password }) => {
 
 export const logout = async () => {
   try {
-    await axios.post("/api/v1/user/logout");
+    await axios.post(backendUrl + "/api/v1/user/logout");
   } catch (error) {
     console.log(error.message);
   }
@@ -42,7 +42,7 @@ export const logout = async () => {
 
 export const getCurrentUser = async () => {
   try {
-    const res = await axios.get("/api/v1/user/current-user");
+    const res = await axios.get(backendUrl + "/api/v1/user/current-user");
     return res;
   } catch (error) {
     console.log(error.message);
@@ -52,7 +52,7 @@ export const getCurrentUser = async () => {
 
 export const refreshAccessToken = async () => {
   try {
-    const res = await axios.post("/api/v1/user/refresh-token");
+    const res = await axios.post(backendUrl + "/api/v1/user/refresh-token");
     return res;
   } catch (error) {
     console.log(error.message);

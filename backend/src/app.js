@@ -7,6 +7,15 @@ import { router as likeRouter } from "./routes/like.router.js";
 import { router as commentRouter } from "./routes/comment.router.js";
 
 const app = express();
+
+const corsOptions = {
+  origin: "https://shubbler.vercel.app",
+  methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.get("/", (req, res) => {
   res.status(200).send("Hello World!");
 });

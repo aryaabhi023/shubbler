@@ -4,7 +4,7 @@ const backendUrl = "https://shubbler-api.onrender.com";
 
 export const addComment = async (comment) => {
   try {
-    await axios.post("/api/v1/comment/add-comment", comment);
+    await axios.post(backendUrl + "/api/v1/comment/add-comment", comment);
   } catch (error) {
     console.log(error.message);
   }
@@ -12,7 +12,10 @@ export const addComment = async (comment) => {
 
 export const getComment = async (id) => {
   try {
-    const comments = await axios.post("/api/v1/comment/get-comment", id);
+    const comments = await axios.post(
+      backendUrl + "/api/v1/comment/get-comment",
+      id
+    );
     return comments;
   } catch (error) {
     console.log(error.message);
@@ -22,7 +25,7 @@ export const getComment = async (id) => {
 
 export const removeComment = async (id) => {
   try {
-    await axios.post("/api/v1/comment/remove-comment", {
+    await axios.post(backendUrl + "/api/v1/comment/remove-comment", {
       id,
     });
   } catch (error) {
@@ -32,7 +35,7 @@ export const removeComment = async (id) => {
 
 export const deleteComment = async (vicharId) => {
   try {
-    await axios.post("/api/v1/comment/delete-comment", {
+    await axios.post(backendUrl + "/api/v1/comment/delete-comment", {
       vicharId,
     });
   } catch (err) {
