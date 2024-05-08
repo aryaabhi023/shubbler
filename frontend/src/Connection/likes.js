@@ -18,6 +18,7 @@ export const removeLike = async (vicharId) => {
 
 export const totalLikes = async (vicharId) => {
   try {
+    console.log(vicharId);
     const obj = await axios.post(
       backendUrl + "/api/v1/like/total-likes",
       vicharId
