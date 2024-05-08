@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "https://shubbler-api.onrender.com";
+const backendUrl = "http://localhost:7004";
 export const addLike = async (vicharId) => {
   try {
     await axios.post(backendUrl + "/api/v1/like", vicharId);
@@ -18,7 +18,6 @@ export const removeLike = async (vicharId) => {
 
 export const totalLikes = async (vicharId) => {
   try {
-    console.log(vicharId);
     const obj = await axios.post(
       backendUrl + "/api/v1/like/total-likes",
       vicharId
