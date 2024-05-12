@@ -78,10 +78,6 @@ function GetPost() {
                 <MdDelete />
               </button>
             )}
-            <p className="text-gray-800 text-lg">{post.content}</p>
-            <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-              {post.tag.toUpperCase()}
-            </button>
             <p className="text-gray-800 mt-4">
               {`Posted on `}
               <span className="text-gray-400">
@@ -89,6 +85,10 @@ function GetPost() {
               </span>{" "}
               {`by ${post.username}`}
             </p>
+            <p className="text-gray-800 text-lg">{post.content}</p>
+            <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+              {post.tag.toUpperCase()}
+            </button>
             <LikedBtn id={post._id} />
           </div>
           <Comment id={post._id} />

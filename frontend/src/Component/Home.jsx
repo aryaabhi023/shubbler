@@ -45,10 +45,6 @@ function Home() {
               key={`${vichar._id}1`}
               className="bg-white mt-1 shadow-lg rounded-lg p-6 mb-4 relative"
             >
-              <p className="text-gray-800 text-lg">{vichar.content}</p>
-              <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                {vichar.tag.toUpperCase()}
-              </button>
               <p className="text-gray-800 mt-4">
                 {`Posted on `}
                 <span className="text-gray-400">
@@ -56,6 +52,11 @@ function Home() {
                 </span>{" "}
                 {`by ${vichar.username}`}
               </p>
+              <p className="text-gray-800 text-lg">{vichar.content}</p>
+              <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                {vichar.tag.toUpperCase()}
+              </button>
+
               <LikedBtn id={vichar._id} />
             </div>
           </div>
