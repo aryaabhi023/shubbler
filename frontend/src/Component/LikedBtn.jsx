@@ -45,7 +45,7 @@ function LikedBtn(id) {
         className={`text-xl cursor-pointer ${color}`}
         onClick={handleLikeBtn}
       />
-      <p className="text-gray-600">{likeCount} likes</p>
+      <p className="text-gray-600 mt-2">{likeCount} likes</p>
     </div>
   );
 }

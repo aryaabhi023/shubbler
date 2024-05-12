@@ -69,7 +69,7 @@ function GetPost() {
     <div className="h-full bg-orange-200">
       {post && (
         <div className="max-w-4xl mx-auto p-10 pt-20">
-          <div className="bg-white shadow-lg rounded-lg p-6 mb-4 relative">
+          <div className="bg-white mt-2 shadow-lg rounded-lg p-6 mb-4 relative">
             {auth && (
               <button
                 className="absolute top-4 right-4 text-red-500 hover:text-red-700"

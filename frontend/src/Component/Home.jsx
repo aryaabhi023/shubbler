@@ -43,7 +43,7 @@ function Home() {
           >
             <div
               key={`${vichar._id}1`}
-              className="bg-white shadow-lg rounded-lg p-6 mb-4 relative"
+              className="bg-white mt-1 shadow-lg rounded-lg p-6 mb-4 relative"
             >
               <p className="text-gray-800 text-lg">{vichar.content}</p>
               <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
