@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "http://localhost:7004";
+const backendUrl = "https://shubbler-api.onrender.com";
 
 export const getAllPost = async () => {
   try {
