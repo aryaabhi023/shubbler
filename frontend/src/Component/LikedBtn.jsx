@@ -40,7 +40,7 @@ function LikedBtn(id) {
   };
 
   return (
-    <div className="absolute grid grid-cols-2 mt-2 bottom-4 right-4">
+    <div className="absolute grid grid-cols-2 mt-4 bottom-4 right-4">
       <AiFillLike
         className={`text-xl cursor-pointer ${color}`}
         onClick={handleLikeBtn}
