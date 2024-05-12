@@ -78,7 +78,7 @@ function GetPost() {
                 <MdDelete />
               </button>
             )}
-            <p className="text-gray-800 mt-4">
+            <p className="text-orange-900 mb-4">
               {`Posted on `}
               <span className="text-gray-400">
                 {changeFormat(post.createdAt)}
