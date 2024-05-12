@@ -45,7 +45,7 @@ function Home() {
               key={`${vichar._id}1`}
               className="bg-white mt-1 shadow-lg rounded-lg p-6 mb-4 relative"
             >
-              <p className="text-gray-800 mt-4">
+              <p className="text-orange-900 mb-4">
                 {`Posted on `}
                 <span className="text-gray-400">
                   {changeFormat(vichar.createdAt)}
