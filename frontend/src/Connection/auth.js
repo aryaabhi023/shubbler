@@ -59,3 +59,15 @@ export const refreshAccessToken = async () => {
     return null;
   }
 };
+
+export const send = async (email) => {
+  try {
+    const res = await axios.post(backendUrl + "/api/v1/user/verify", {
+      email,
+    });
+    return res;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};

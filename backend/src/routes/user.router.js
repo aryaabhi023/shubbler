@@ -4,12 +4,14 @@ import {
   logout,
   refreshAccessToken,
   getCurrentUser,
+  sendOtp,
 } from "../controller/user.controller.js";
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
+router.route("/verify").post(sendOtp);
 router.route("/register").post(registerUser);
 router.route("/login").post(login);
 router.route("/logout").post(verifyJWT, logout);

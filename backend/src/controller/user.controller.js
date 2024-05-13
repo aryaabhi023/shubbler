@@ -1,4 +1,5 @@
 import { User } from "../model/user.model.js";
+import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
@@ -12,7 +13,42 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
 
     return { refreshToken, accessToken };
   } catch (error) {
-    throw new ApiError(400, "Error generating tokens");
+    throw error;
+  }
+};
+
+const sendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      secure: true,
+      port: 465,
+      auth: {
+        user: "2041001066.abhishekarya@gmail.com",
+        pass: "gkjt pvja tkgk pyhl",
+      },
+    });
+
+    const otp = Math.floor(Math.random() * 1000000);
+
+    async function main() {
+      const info = await transporter.sendMail({
+        from: "2041001066.abhishekarya@gmail.com",
+        to: email, // list of receivers
+        subject: "OTP Verification",
+        text: "Dear Sir/Mam", // plain text body
+        html: `<b>Your email verification code is: ${otp}</b>`, // html body
+      });
+
+      console.log("Message sent: %s", info.messageId);
+    }
+
+    await main();
+
+    res.status(200).json(otp);
+  } catch (error) {
+    res.status(200).json(error.message);
   }
 };
 
@@ -157,4 +193,11 @@ const changePassword = async (req, res) => {
   res.status(200).json("Password is changed");
 };
 
-export { registerUser, login, logout, refreshAccessToken, getCurrentUser };
+export {
+  registerUser,
+  login,
+  logout,
+  refreshAccessToken,
+  getCurrentUser,
+  sendOtp,
+};
