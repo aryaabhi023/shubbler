@@ -88,14 +88,13 @@ function ForgetPassword() {
                 OTP
               </label>
               <input
-                type="text"
+                type="number"
                 id="otp"
                 className="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Enter OTP"
                 value={otp}
                 onChange={(e) => {
-                  if (Number(e.target.value) != NaN)
-                    setOtp(Number(e.target.value));
+                  setOtp(Number(e.target.value));
                 }}
                 required
               />
