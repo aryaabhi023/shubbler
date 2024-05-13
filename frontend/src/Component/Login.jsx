@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { login } from "../Connection/auth";
 import { login as storeLogin } from "../Store/authSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -13,6 +15,8 @@ const Login = () => {
     const user = await login({ username, password });
     if (user) {
       dispatch(storeLogin(user.data.loggedUser));
+    } else {
+      setError("Invalid credentials");
     }
   };
 
@@ -20,6 +24,7 @@ const Login = () => {
     <div className="flex justify-center items-center h-screen bg-blue-200">
       <div className="w-2/3 max-w-md p-4 space-y-4 bg-white rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center">Login</h1>
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="space-y-2" onSubmit={handleSubmit}>
           <div>
             <label
@@ -58,6 +63,14 @@ const Login = () => {
               }}
               required
             />
+          </div>
+          <div class="mb-4 text-right">
+            <Link
+              to="/forget-password"
+              class="text-sm text-blue-600 hover:text-blue-500"
+            >
+              Forgot password?
+            </Link>
           </div>
           <button
             type="submit"

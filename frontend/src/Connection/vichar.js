@@ -1,11 +1,9 @@
 import axios from "axios";
 
 const backendUrl = "https://shubbler-api.onrender.com";
-
 export const getAllPost = async () => {
   try {
     const posts = await axios.get(backendUrl + "/api/v1/vichar/get-posts");
-    console.log("hey", posts);
     return posts;
   } catch (err) {
     console.log(err.message);

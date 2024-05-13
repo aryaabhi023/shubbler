@@ -16,16 +16,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle signup logic (e.g., send data to server)
-    console.log(otp, sendedOtp, typeof otp, typeof sendedOtp);
     if (otp === sendedOtp) {
       const user = await registerUser({ fullName, username, email, password });
       if (user) {
         dispatch(storeLogin(user.data.loggedUser));
       }
-      console.log("Full Name:", fullName);
-      console.log("Username:", username);
-      console.log("Email:", email);
-      console.log("Password:", password);
     } else {
       alert("Mismatch Otp!....");
       setSendedOtp(undefined);
@@ -38,7 +33,6 @@ const Signup = () => {
     send(email)
       .then((res) => {
         setSendedOtp(Number(res.data));
-        console.log("sended Otp", res.data);
         setVerfied(true);
       })
       .catch((err) => {

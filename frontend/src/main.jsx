@@ -11,6 +11,7 @@ import {
   AuthLayout,
   AddPost,
   GetPost,
+  ForgetPassword,
 } from "./Component/index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             <Login />
           </AuthLayout>
         ),
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />,
       },
       {
         path: "signup",

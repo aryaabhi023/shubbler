@@ -20,18 +20,6 @@ app.get("/", (req, res) => {
   res.status(200).send("Hello World!");
 });
 
-// app.use(
-//   cors({
-//     origin: [
-//       "https://shubbler-api.onrender.com",
-//       "https://shubbler.vercel.app",
-//       "http://localhost:5173",
-//       "http://localhost:7004",
-//     ],
-//     credentials: true,
-//   })
-// );
-
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 app.use(express.static("public"));

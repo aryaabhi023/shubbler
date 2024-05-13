@@ -11,7 +11,6 @@ function Home() {
   console.log(authStatus);
   useEffect(() => {
     getAllPost().then((res) => {
-      console.log(res);
       setVichars([...res.data]);
     });
   }, []);

@@ -25,8 +25,8 @@ const sendOtp = async (req, res) => {
       secure: true,
       port: 465,
       auth: {
-        user: "2041001066.abhishekarya@gmail.com",
-        pass: "gkjt pvja tkgk pyhl",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -34,7 +34,7 @@ const sendOtp = async (req, res) => {
 
     async function main() {
       const info = await transporter.sendMail({
-        from: "2041001066.abhishekarya@gmail.com",
+        from: process.env.EMAIL_USER,
         to: email, // list of receivers
         subject: "OTP Verification",
         text: "Dear Sir/Mam", // plain text body
@@ -98,7 +98,7 @@ const login = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      // sameSite: "none",
     };
 
     res
@@ -126,7 +126,7 @@ const logout = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    //sameSite: "none",
   };
 
   return res
@@ -163,7 +163,7 @@ const refreshAccessToken = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    //sameSite: "none",
   };
   res
     .status(200)
@@ -185,7 +185,28 @@ const changePassword = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(400).json("Old Password is not correct");
   }
-  if ((newPassword = "")) {
+  if (newPassword === "") {
+    return res.status(400).json("Enter new password");
+  }
+  user.password = newPassword;
+  user.save({ validateBeforeSave: false });
+  res.status(200).json("Password is changed");
+};
+
+const verifyEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json(false);
+  }
+  return res.status(200).json(true);
+};
+
+const ForgetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+  const user = await User.findOne({ email });
+
+  if (newPassword === "") {
     return res.status(400).json("Enter new password");
   }
   user.password = newPassword;
@@ -200,4 +221,6 @@ export {
   refreshAccessToken,
   getCurrentUser,
   sendOtp,
+  verifyEmail,
+  ForgetPassword,
 };
