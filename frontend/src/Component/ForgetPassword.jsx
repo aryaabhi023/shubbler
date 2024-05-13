@@ -94,7 +94,8 @@ function ForgetPassword() {
                 placeholder="Enter OTP"
                 value={otp}
                 onChange={(e) => {
-                  setOtp(Number(e.target.value));
+                  if (Number(e.target.value) != NaN)
+                    setOtp(Number(e.target.value));
                 }}
                 required
               />
