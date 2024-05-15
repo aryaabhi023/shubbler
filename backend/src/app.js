@@ -17,7 +17,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
-  res.status(200).send("Hello World!");
+  res.status(200).send("Now you can browse to https://shubbler.vercel.app");
 });
 
 app.use(express.json({ limit: "20kb" }));
