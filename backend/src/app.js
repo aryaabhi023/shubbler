@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   res
     .status(200)
     .send(
-      "Now you can browse to <a href=`https://shubbler.vercel.app` target=`_blank`>https://shubbler.vercel.app</a>"
+      'Now you can browse to <a href="https://shubbler.vercel.app" target="_blank">https://shubbler.vercel.app</a>'
     );
 });
 
