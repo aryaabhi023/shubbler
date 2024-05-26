@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const backendUrl = "https://shubbler-api.onrender.com";
+const backendUrl = "https://shubbler-api.onrender.com/";
 
 export const login = async ({ username, password }) => {
   try {
@@ -27,8 +27,13 @@ export const registerUser = async ({ fullName, email, username, password }) => {
     res = login({ username, password });
     return res;
   } catch (error) {
-    console.log(error.message);
-    return null;
+    if (error.response) {
+      console.error("Error:", error.response.data.error);
+      return { error: error.response.data.error };
+    } else {
+      console.error("Error:", error.message);
+      return null;
+    }
   }
 };
 
@@ -91,8 +96,19 @@ export const forgetPassword = async (email, newPassword) => {
       email,
       newPassword,
     });
-    console.log("forget password's ", res);
     return res;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const getUserByUsername = async (username) => {
+  try {
+    const res = await axios.post(backendUrl + "/api/v1/user/get-user", {
+      username,
+    });
+    return res?.data;
   } catch (error) {
     console.log(error.message);
     return null;
