@@ -8,7 +8,7 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
-    user.refressToken = refreshToken;
+    user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
     return { refreshToken, accessToken };
@@ -62,6 +62,10 @@ const registerUser = async (req, res) => {
   ) {
     return res.status(400).json("All field are manditory...");
   }
+  const existUser = await User.findOne({ $or: [{ username }, { email }] });
+  if (existUser) {
+    return res.status(400).json({ error: "Username or Email already exist" });
+  }
   const user = new User({
     username,
     fullName,
@@ -113,10 +117,10 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   const user = await User.findByIdAndUpdate(
-    req.user._id,
+    req.user?._id,
     {
-      $set: {
-        refressToken: undefined,
+      $unset: {
+        refreshToken: 1,
       },
     },
     {
@@ -153,7 +157,7 @@ const refreshAccessToken = async (req, res) => {
     return res.status(400).json("Invalid refresh Token");
   }
 
-  if (user.refressToken !== incomingRefreshToken) {
+  if (user.refreshToken !== incomingRefreshToken) {
     return res.status(400).json("Invalid refresh Token");
   }
 
@@ -214,6 +218,20 @@ const ForgetPassword = async (req, res) => {
   res.status(200).json("Password is changed");
 };
 
+const getUserByUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user = await User.findOne({ username }).select(
+      "-password -refreshToken"
+    );
+    if (!user) return res.status(400).json("username is not Exists");
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error.message);
+  }
+};
+
 export {
   registerUser,
   login,
@@ -223,4 +241,5 @@ export {
   sendOtp,
   verifyEmail,
   ForgetPassword,
+  getUserByUsername,
 };

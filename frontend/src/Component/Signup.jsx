@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser, send } from "../Connection/auth";
 import { login as storeLogin } from "../Store/authSlice";
+import { PiEyeClosedDuotone, PiEyeDuotone } from "react-icons/pi";
 
 const Signup = () => {
+  const [error, setError] = useState(null);
   const [sendedOtp, setSendedOtp] = useState(undefined);
   const [Verified, setVerfied] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -11,6 +13,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState(undefined);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -18,18 +21,30 @@ const Signup = () => {
     // Handle signup logic (e.g., send data to server)
     if (otp === sendedOtp) {
       const user = await registerUser({ fullName, username, email, password });
-      if (user) {
+      if (user?.error) {
+        setError(user.error);
+      } else if (user) {
         dispatch(storeLogin(user.data.loggedUser));
+        return;
       }
     } else {
-      alert("Mismatch Otp!....");
-      setSendedOtp(undefined);
-      setOtp(undefined);
-      setVerfied(false);
+      setError("Mismatch Otp!....");
     }
+    setSendedOtp(undefined);
+    setOtp(undefined);
+    setVerfied(false);
   };
 
   const handleVerify = () => {
+    if (password.length < 8) {
+      setError("Password must be atleast 8 character long");
+      return;
+    }
+    if (username.length < 3) {
+      setError("Username must be atleast 3 character long");
+      return;
+    }
+    setError(null);
     send(email)
       .then((res) => {
         setSendedOtp(Number(res.data));
@@ -44,6 +59,7 @@ const Signup = () => {
     <div className="flex justify-center items-center h-screen bg-blue-200 pt-10">
       <div className="w-2/3 max-w-md mt-4 p-4 space-y-4 bg-white rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center">Sign Up</h1>
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="space-y-2" onSubmit={handleSubmit}>
           <div>
             <label
@@ -109,17 +125,31 @@ const Signup = () => {
             >
               Password
             </label>
-            <input
-              type="text"
-              id="password"
-              className="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="********"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              required
-            />
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
+                placeholder="********"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                required
+              />
+              {!showPassword && (
+                <PiEyeClosedDuotone
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-zinc-700"
+                  onClick={() => setShowPassword(!showPassword)} // Toggles the password visibility
+                />
+              )}
+              {showPassword && (
+                <PiEyeDuotone
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-zinc-700"
+                  onClick={() => setShowPassword(!showPassword)} // Toggles the password visibility
+                />
+              )}
+            </div>
           </div>
           {Verified && (
             <div>

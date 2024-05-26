@@ -47,4 +47,14 @@ const deletePost = async (req, res) => {
   }
 };
 
-export { getAllPost, getPost, addPost, deletePost };
+const getPostByUsername = async (req, res) => {
+  try {
+    const username = req.params.username;
+    const vichars = await Vichar.find({ username });
+    res.status(200).json(vichars);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+export { getAllPost, getPost, addPost, deletePost, getPostByUsername };

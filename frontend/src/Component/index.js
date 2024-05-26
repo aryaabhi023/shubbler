@@ -11,6 +11,7 @@ import GetPost from "./GetPost";
 import LikedBtn from "./LikedBtn";
 import Comment from "./Comment";
 import ForgetPassword from "./ForgetPassword";
+import Profile from "./Profile";
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   LikedBtn,
   Comment,
   ForgetPassword,
+  Profile,
 };

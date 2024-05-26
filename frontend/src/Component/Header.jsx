@@ -30,7 +30,7 @@ function Header() {
   ];
 
   return (
-    <header className="grid grid-cols-2 rounded-lg max-w-4xl bg-stone-800 text-white py-2 px-2 absolute top-2 left-0 right-0 mx-auto">
+    <header className="grid grid-cols-2 rounded-lg max-w-4xl bg-stone-800 text-white py-2 px-2 fixed z-10 top-2 left-0 right-0 mx-auto mb-10">
       <div className="">
         <Link to="/">
           <Logo width="75px" />

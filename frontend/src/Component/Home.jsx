@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getAllPost } from "../Connection/vichar";
 import { LikedBtn } from "./index";
 
@@ -8,23 +8,26 @@ function Home() {
   const [vichars, setVichars] = useState([]);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
-  console.log(authStatus);
   useEffect(() => {
     getAllPost().then((res) => {
       setVichars([...res.data]);
     });
   }, []);
 
-  function changeFormat(passDate) {
+  const changeFormat = (passDate) => {
     const createdAt = passDate;
     const date = new Date(createdAt);
-    const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month (zero-based) and pad with leading zero if needed
-    const year = date.getFullYear(); // Get full year
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
 
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
-  }
+  };
+
+  const navToProfile = (username) => {
+    navigate(`/profile/${username}`);
+  };
 
   return (
     <div className="min-h-screen grid items-center justify-center pt-16 bg-gray-100 dark:bg-gray-800">
@@ -49,7 +52,12 @@ function Home() {
                 <span className="text-gray-400">
                   {changeFormat(vichar.createdAt)}
                 </span>{" "}
-                {`by ${vichar.username}`}
+                <Link
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navToProfile(vichar.username);
+                  }}
+                >{`by ${vichar.username}`}</Link>
               </p>
               <p className="text-gray-800 text-lg">{vichar.content}</p>
               <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">

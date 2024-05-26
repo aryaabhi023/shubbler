@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import avatar from "../image/avatar.jpg";
 import { logout as storeLogout } from "../Store/authSlice";
 import { logout } from "../Connection/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function LogoutBtn() {
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.auth.userData);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("click", closeDropdown);
+    } else {
+      document.removeEventListener("click", closeDropdown);
+    }
+
+    return () => {
+      document.removeEventListener("click", closeDropdown);
+    };
+  }, [isOpen]);
 
   const logoutHandler = async () => {
     await logout();
@@ -12,12 +39,37 @@ function LogoutBtn() {
   };
 
   return (
-    <button
-      onClick={logoutHandler}
-      className="px-3 py-1 rounded-full transition-colors duration-300 hover:bg-orange-200 hover:text-neutral-500 focus:text-orange-300"
-    >
-      Logout
-    </button>
+    <div ref={dropdownRef} className="relative">
+      <button
+        onClick={toggleDropdown}
+        className="flex items-center focus:outline-none"
+      >
+        <img src={avatar} alt="avatar" className="w-8 h-8 rounded-full" />
+      </button>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 z-10 bg-white shadow-md rounded-lg">
+          <ul className="py-1">
+            <li>
+              <Link
+                to={`/profile/${userData.username}`}
+                className="block px-4 py-2 text-zinc-800 hover:bg-zinc-200"
+                onClick={() => setIsOpen(false)}
+              >
+                My Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block px-4 py-2 text-zinc-800 hover:bg-zinc-200"
+                onClick={logoutHandler}
+              >
+                Logout
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
 

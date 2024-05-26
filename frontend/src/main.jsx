@@ -12,6 +12,7 @@ import {
   AddPost,
   GetPost,
   ForgetPassword,
+  Profile,
 } from "./Component/index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout>
             <Signup />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "profile/:username",
+        element: (
+          <AuthLayout>
+            <Profile />
           </AuthLayout>
         ),
       },

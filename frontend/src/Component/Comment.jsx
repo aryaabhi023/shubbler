@@ -3,6 +3,7 @@ import { addComment, getComment, removeComment } from "../Connection/comment";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LikedBtn } from "./index";
 
 function Comment(id) {
   const [postContent, setPostContent] = useState("");

@@ -9,7 +9,7 @@ import { router as commentRouter } from "./routes/comment.router.js";
 const app = express();
 
 const corsOptions = {
-  origin: "https://shubbler.vercel.app",
+  origin: "https://shubbler.vercel.app/",
   methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
   credentials: true,
 };

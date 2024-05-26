@@ -7,6 +7,7 @@ import {
   sendOtp,
   verifyEmail,
   ForgetPassword,
+  getUserByUsername,
 } from "../controller/user.controller.js";
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js";
@@ -21,5 +22,6 @@ router.route("/login").post(login);
 router.route("/logout").post(verifyJWT, logout);
 router.route("/refresh-token").post(refreshAccessToken);
 router.route("/current-user").get(verifyJWT, getCurrentUser);
+router.route("/get-user").post(verifyJWT, getUserByUsername);
 
 export { router };

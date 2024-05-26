@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getPost, deletePost } from "../Connection/vichar";
 import { MdDelete } from "react-icons/md";
 import { getCurrentUser } from "../Connection/auth";
 import { deleteLike } from "../Connection/likes";
-import { LikedBtn, Comment, AuthLayout } from "./index";
+import { LikedBtn, Comment } from "./index";
 import { deleteComment } from "../Connection/comment";
 
 function GetPost() {
@@ -65,6 +65,11 @@ function GetPost() {
     return formattedDate;
   }
 
+  const navToProfile = (e) => {
+    e.stopPropagation();
+    navigate(`/profile/${post.username}`);
+  };
+
   return (
     <div className="h-full bg-orange-200">
       {post && (
@@ -83,7 +88,7 @@ function GetPost() {
               <span className="text-gray-400">
                 {changeFormat(post.createdAt)}
               </span>{" "}
-              {`by ${post.username}`}
+              <Link onClick={navToProfile}>{`by ${post.username}`}</Link>
             </p>
             <p className="text-gray-800 text-lg">{post.content}</p>
             <button className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
