@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "https://shubbler-api.onrender.com/";
+const backendUrl = "https://shubbler-api.onrender.com";
 
 export const addLike = async (vicharId) => {
   try {

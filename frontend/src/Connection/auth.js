@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const backendUrl = "https://shubbler-api.onrender.com/";
+const backendUrl = "https://shubbler-api.onrender.com";
 
 export const login = async ({ username, password }) => {
   try {
