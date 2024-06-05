@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import { app } from "./app.js";
 
 const port = process.env.PORT || 7006;
-
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {

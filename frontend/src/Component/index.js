@@ -12,6 +12,7 @@ import LikedBtn from "./LikedBtn";
 import Comment from "./Comment";
 import ForgetPassword from "./ForgetPassword";
 import Profile from "./Profile";
+import EditAvatar from "./EditAvatar";
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   Comment,
   ForgetPassword,
   Profile,
+  EditAvatar,
 };

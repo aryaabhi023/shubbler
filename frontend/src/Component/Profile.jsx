@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import avatar from "../image/avatar.jpg";
 import { useParams } from "react-router-dom";
 import { getUserByUsername } from "../Connection/auth";
 import { getPostByUsername } from "../Connection/vichar";
 import { useNavigate, Link } from "react-router-dom";
 import { LikedBtn } from "./index.js";
+import { useSelector } from "react-redux";
 
 function Profile() {
   const { username } = useParams();
+  const auth = useSelector((state) => state.auth.userData);
   const [user, setUser] = useState(null);
+  const [vichars, setVichars] = useState([]);
   const navigate = useNavigate();
 
   const changeFormat = (passDate) => {
@@ -26,28 +28,38 @@ function Profile() {
     navigate(`/profile/${username}`);
   };
 
-  const [vichars, setVichars] = useState([]);
   useEffect(() => {
     getUserByUsername(username).then((res) => {
       setUser(res);
     });
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     getPostByUsername(username).then((res) => {
       setVichars(res?.data);
     });
-  }, []);
+  }, [username]);
 
   return (
     <div className="bg-white dark:bg-gray-800 text-black dark:text-white p-8 md:p-8 rounded-lg shadow-md w-screen h-screen">
       <div className="flex items-center mb-4 mt-10">
-        <img
-          src={avatar}
-          alt="Avatar"
-          className="w-16 h-16 rounded-full mr-4"
-        />
-        <div>
+        <div className="flex flex-col items-center justify-center">
+          <img
+            src={user?.avatar}
+            alt="Avatar"
+            className="w-32 h-32 rounded-full mb-4"
+          />
+          {auth?.username === username && (
+            <button
+              type="button"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md"
+              onClick={() => navigate("/edit-avatar")}
+            >
+              Edit
+            </button>
+          )}
+        </div>
+        <div className="ml-3">
           <h2 className="text-lg font-bold">{user?.username}</h2>
           <p className="text-sm">{user?.fullName}</p>
         </div>

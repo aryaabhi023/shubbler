@@ -3,9 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getPost, deletePost } from "../Connection/vichar";
 import { MdDelete } from "react-icons/md";
-import { getCurrentUser } from "../Connection/auth";
+import { getCurrentUser, getUserByUsername } from "../Connection/auth";
 import { deleteLike } from "../Connection/likes";
 import { LikedBtn, Comment } from "./index";
+import avatar from "../image/avatar.jpg";
 import { deleteComment } from "../Connection/comment";
 
 function GetPost() {
@@ -14,6 +15,7 @@ function GetPost() {
   const [post, setPost] = useState(null);
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(avatar);
 
   let postData;
 
@@ -34,6 +36,11 @@ function GetPost() {
         } else {
           setAuth(false);
         }
+      })
+      .then(() => {
+        getUserByUsername(postData?.username).then((userResponse) => {
+          setAvatarUrl(userResponse.avatar);
+        });
       })
       .catch((error) => {
         console.error(error.message);
@@ -84,6 +91,15 @@ function GetPost() {
               </button>
             )}
             <p className="text-orange-900 mb-4">
+              <img
+                src={avatarUrl}
+                alt="avatar"
+                className="w-8 h-8 rounded-full cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navToProfile(vichar.username);
+                }}
+              />
               {`Posted on `}
               <span className="text-gray-400">
                 {changeFormat(post.createdAt)}

@@ -3,7 +3,8 @@ import { addComment, getComment, removeComment } from "../Connection/comment";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LikedBtn } from "./index";
+import avatar from "../image/avatar.jpg";
+import { getUserByUsername } from "../Connection/auth";
 
 function Comment(id) {
   const [postContent, setPostContent] = useState("");
@@ -21,10 +22,15 @@ function Comment(id) {
     setPostContent("");
   };
 
-  const load = () => {
-    getComment(id).then((res) => {
-      setComments(res.data);
-    });
+const load = async () => {
+    const fetchedComments = await getComment(id);
+    const commentsWithAvatar = await Promise.all(
+      fetchedComments.data.map(async (comment) => {
+        const userData = await getUserByUsername(comment.username);
+        return { ...comment, avatarUrl: userData?.avatar };
+      })
+    );
+    setComments(commentsWithAvatar);
   };
 
   useEffect(() => {
@@ -91,10 +97,23 @@ function Comment(id) {
             <div key={comment._id} className="w-full mx-auto">
               <div className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start">
                 <div>
-                  <div className="text-sm text-gray-500 mb-2">
-                    {comment.username} {changeFormat(comment.createdAt)}
+                  <div className="flex items-center space-x-2">
+                    <img
+                      src={comment.avatarUrl||avatar}
+                      alt="avatar"
+                      className="w-8 h-8 rounded-full cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate("/profile/" + comment.username);
+                      }}
+                    />
+                    <div className="text-sm text-gray-500 mb-2">
+                      {comment.username} {changeFormat(comment.createdAt)}
+                    </div>
                   </div>
-                  <p className="text-gray-800">{comment.content}</p>
+                  <div>
+                  <p className="text-gray-800 pl-10">{comment.content}</p>
+                  </div>
                 </div>
                 {user.username === comment.username && (
                   <button

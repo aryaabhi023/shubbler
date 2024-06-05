@@ -18,8 +18,11 @@ const authSlice = createSlice({
     logout: (state) => {
       (state.status = false), (state.userData = null);
     },
+    storeUpdateAvatar: (state, action) => {
+      state.userData.avatar = action.payload;
+    }
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout,storeUpdateAvatar } = authSlice.actions;
 export default authSlice.reducer;

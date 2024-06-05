@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from "react";
+import avatar from "../image/avatar.jpg";
 import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { getAllPost } from "../Connection/vichar";
 import { LikedBtn } from "./index";
+import { getUserByUsername } from "../Connection/auth";
 
 function Home() {
   const [vichars, setVichars] = useState([]);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
   useEffect(() => {
-    getAllPost().then((res) => {
-      setVichars([...res.data]);
-    });
+    const fetchData = async () => {
+      const allVichars = await getAllPost();
+      const vicharsWithAvatar = await Promise.all(
+        allVichars.data.map(async (vichar) => {
+          const user = await getUserByUsername(vichar.username);
+          return { ...vichar, avatarUrl: user?.avatar };
+        })
+      );
+      setVichars(vicharsWithAvatar);
+    };
+    fetchData();
   }, []);
+  
+
+  const getAvatar= async(username) => {
+    const user=await getUserByUsername(username);
+    return user?.avatar;
+  };
+
+
 
   const changeFormat = (passDate) => {
     const createdAt = passDate;
@@ -48,6 +66,15 @@ function Home() {
               className="bg-white mt-1 shadow-lg rounded-lg p-6 mb-4 relative"
             >
               <p className="text-orange-900 mb-4">
+                <img
+                  src={vichar.avatarUrl||avatar}
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navToProfile(vichar.username);
+                  }}
+                />
                 {`Posted on `}
                 <span className="text-gray-400">
                   {changeFormat(vichar.createdAt)}

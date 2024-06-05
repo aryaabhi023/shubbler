@@ -3,11 +3,13 @@ import { login } from "../Connection/auth";
 import { login as storeLogin } from "../Store/authSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { PiEyeClosedDuotone, PiEyeDuotone } from "react-icons/pi";
 
 const Login = () => {
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ const Login = () => {
               placeholder="Username"
               value={username}
               onChange={(e) => {
-                setUsername(e.target.value);
+                setUsername((e.target.value).toLowerCase());
               }}
               required
             />
@@ -52,17 +54,31 @@ const Login = () => {
             >
               Password
             </label>
-            <input
-              type="text"
-              id="password"
-              className="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="********"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              required
-            />
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
+                placeholder="********"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                required
+              />
+              {!showPassword && (
+                <PiEyeClosedDuotone
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-zinc-700"
+                  onClick={() => setShowPassword(!showPassword)} // Toggles the password visibility
+                />
+              )}
+              {showPassword && (
+                <PiEyeDuotone
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-zinc-700"
+                  onClick={() => setShowPassword(!showPassword)} // Toggles the password visibility
+                />
+              )}
+            </div>
           </div>
           <div className="mb-4 text-right">
             <Link

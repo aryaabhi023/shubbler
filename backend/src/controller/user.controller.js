@@ -1,6 +1,7 @@
 import { User } from "../model/user.model.js";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+import { uploadOnCloudinary } from "../util/cloudinary.js";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
@@ -102,7 +103,7 @@ const login = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      // sameSite: "none",
     };
 
     res
@@ -130,7 +131,7 @@ const logout = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    // sameSite: "none",
   };
 
   return res
@@ -167,7 +168,7 @@ const refreshAccessToken = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    // sameSite: "none",
   };
   res
     .status(200)
@@ -232,6 +233,34 @@ const getUserByUsername = async (req, res) => {
   }
 };
 
+const updateAvatar = async (req, res) => {
+ try {
+   let avatar = req.file?.path;
+   if (!avatar) {
+     return res.status(400).json("Avatar path not found...");
+   }
+   avatar = await uploadOnCloudinary(avatar);
+   avatar = avatar?.url;
+   const user = await User.findByIdAndUpdate(
+     req.user?._id,
+     {
+       $set: {
+         avatar,
+       },
+     },
+     {
+       new: true,
+     }
+   );
+   await user.save({validateBeforeSave:false});
+   return res.status(200).json(user?.avatar);
+ } catch (error) {
+   console.log(error.message);
+   return res.status(500).json(error.message);
+ }
+  
+};
+
 export {
   registerUser,
   login,
@@ -242,4 +271,5 @@ export {
   verifyEmail,
   ForgetPassword,
   getUserByUsername,
+  updateAvatar,
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const backendUrl = "https://shubbler-api.onrender.com";
+const backendUrl = "http://localhost:7004";
 
 export const login = async ({ username, password }) => {
   try {
@@ -111,6 +111,27 @@ export const getUserByUsername = async (username) => {
     return res?.data;
   } catch (error) {
     console.log(error.message);
+    return null;
+  }
+};
+
+export const updateAvatar = async (selectedFile) => {
+  if (selectedFile) {
+    const formData = new FormData();
+    formData.append("avatar", selectedFile);
+
+    try {
+      const response = await axios.post(
+        backendUrl + "/api/v1/user/update-avatar",
+        formData,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Upload failed:", error);
+      return null;
+    }
+  } else {
+    console.error("Please select an image to upload.");
     return null;
   }
 };

@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    avatar: {
+      type: String,
+      default:
+        "https://asset.cloudinary.com/abhishub/1bb94b700ddb1fb60981184da473d387",
+    },
   },
   {
     timestamps: true,

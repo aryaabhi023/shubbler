@@ -13,6 +13,7 @@ import {
   GetPost,
   ForgetPassword,
   Profile,
+  EditAvatar,
 } from "./Component/index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -66,6 +67,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout>
             <GetPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "edit-avatar",
+        element: (
+          <AuthLayout>
+            <EditAvatar />
           </AuthLayout>
         ),
       },

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import avatar from "../image/avatar.jpg";
 import { logout as storeLogout } from "../Store/authSlice";
-import { logout } from "../Connection/auth";
+import { getCurrentUser, logout } from "../Connection/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -44,7 +43,7 @@ function LogoutBtn() {
         onClick={toggleDropdown}
         className="flex items-center focus:outline-none"
       >
-        <img src={avatar} alt="avatar" className="w-8 h-8 rounded-full" />
+        <img src={userData?.avatar} alt="avatar" className="w-8 h-8 rounded-full" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 z-10 bg-white shadow-md rounded-lg">
