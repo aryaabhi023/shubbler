@@ -43,7 +43,7 @@ function LogoutBtn() {
         onClick={toggleDropdown}
         className="flex items-center focus:outline-none"
       >
-        <img src={userData?.avatar} alt="avatar" className="w-8 h-8 rounded-full" />
+        <img src={userData?.avatar} alt="avatar" className="w-8 h-10 md:h-8 rounded-lg md:rounded-full" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 z-10 bg-white shadow-md rounded-lg">
