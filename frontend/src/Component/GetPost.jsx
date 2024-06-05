@@ -73,7 +73,6 @@ function GetPost() {
   }
 
   const navToProfile = (e) => {
-    e.stopPropagation();
     navigate(`/profile/${post.username}`);
   };
 
