@@ -96,7 +96,6 @@ function GetPost() {
                 alt="avatar"
                 className="w-8 h-8 rounded-full cursor-pointer"
                 onClick={(e) => {
-                  e.stopPropagation();
                   navToProfile(post.username);
                 }}
               />
