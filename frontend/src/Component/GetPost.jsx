@@ -97,7 +97,7 @@ function GetPost() {
                 className="w-8 h-8 rounded-full cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navToProfile(vichar.username);
+                  navToProfile(post.username);
                 }}
               />
               {`Posted on `}
