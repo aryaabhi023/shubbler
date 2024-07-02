@@ -1,6 +1,7 @@
 import { Like } from "../model/like.model.js";
 import mongoose from "mongoose";
 
+
 export const liked = async (req, res) => {
   try {
     const vicharId = req.body.id;
