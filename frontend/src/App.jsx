@@ -40,8 +40,6 @@ function App() {
   };
   start();
 
-  useEffect(() => {}, []);
-
   return !loading ? (
     <div className="w-full">
       <div className="mx-auto">
